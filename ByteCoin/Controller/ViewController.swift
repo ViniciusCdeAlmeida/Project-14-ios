@@ -10,11 +10,41 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let coinManager = CoinManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        currencyPicker.dataSource = self
+        currencyPicker.delegate = self
         // Do any additional setup after loading the view.
     }
+    
 
-
+    @IBOutlet weak var currencyPicker: UIPickerView!
+    @IBOutlet weak var bitcoinLabel: UILabel!
+    @IBOutlet weak var currencyLabel: UILabel!
+    
 }
 
+//MARK: - UIPickerViewDataSource
+extension ViewController: UIPickerViewDataSource{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return coinManager.currencyArray.count
+    }
+}
+
+//MARK: - UIPickerViewDelegate
+extension ViewController: UIPickerViewDelegate{
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        print(coinManager.currencyArray[row])
+        return coinManager.currencyArray[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print(coinManager.currencyArray[row])
+    }
+}
